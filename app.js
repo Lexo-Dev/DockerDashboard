@@ -1,26 +1,25 @@
 const fs = require("fs");
 const path = require("path");
-const { safeTerminal } = require("./backend/utilities/terminal");
+
+const { safeTerminal } = require("./Backend/src/utilities/terminal");
+
 const port = 3230;
 
 async function app() {
-  console.clear();
 
-  const BACKEND = path.resolve(__dirname + "/backend/");
-  const NODE_MODULES = BACKEND + "/node_modules";
+    console.clear();
 
-  if (!fs.existsSync(NODE_MODULES)) {
-    console.log(
-      "🚀  Please wait while we install all the dependencies for you...\n"
-    );
-    await safeTerminal.installModules(BACKEND);
-    console.log("🎉  All dependencies added successfully!");
-  }
+    const BACKEND = path.resolve(__dirname + "/Backend/");
+    const NODE_MODULES = BACKEND + "/node_modules";
 
-  setTimeout(() => {
-    console.log(`✨  Visit http://localhost:${port} to use Docker Web GUI`);
-  }, 1500);
-  await safeTerminal.serve(BACKEND);
-}
+    if (!fs.existsSync(NODE_MODULES)) {
+        console.log("Installing dependencies...");
+        await safeTerminal.installModules(BACKEND);
+        console.log("All dependencies installed.");
+    }
+
+    setTimeout(() => console.log(`Dashboard is available at http://localhost:${port}`), 1000);
+    await safeTerminal.serve(BACKEND);
+};
 
 app();
