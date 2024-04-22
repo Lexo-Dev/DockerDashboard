@@ -7,7 +7,7 @@ import ImageCard from "./card";
 import DeleteModal from "../delete_modal";
 import Loader from "../loader";
 
-import { getImagesRequest, toggleDeleteModal } from "../../store/reducers/image.slice";
+import { getImagesRequest } from "../../store/reducers/image";
 
 const ImageList = () => {
 
@@ -25,7 +25,9 @@ const ImageList = () => {
         );
     }
     else if (images.length === 0) {
-        return (<Loader />);
+        return (
+            <Loader />
+        );
     }
 
     return (
@@ -35,14 +37,10 @@ const ImageList = () => {
             justifyContent="center"
             alignItems="center"
             marginTop={20}>
-            {
-                showModal && <DeleteModal
-                    image={selectedImage}
-                    toggleModal={() => {
-                        dispatch(toggleDeleteModal());
-                    }}
-                />
-            }
+            <DeleteModal
+                image={selectedImage}
+                isShown={showModal}
+            />
             {
                 images.map((image, index) =>
                     <ImageCard

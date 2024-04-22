@@ -1,12 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import { Switch } from "evergreen-ui";
 
-import { toggleContainer } from "../../store/actions/container.action";
+import { toggleContainerRequest } from "../../store/reducers/container";
 
 const ContainerSwitch = (props) => {
 
-    const { container, toggleContainer } = props;
+    const dispatch = useDispatch();
+
+    const { container } = props;
 
     const command = container.State.Running ? "stop" : "start";
     const disabled = !!container.stateToggling;
@@ -19,17 +22,10 @@ const ContainerSwitch = (props) => {
             checked={container.State.Running}
             disabled={disabled}
             onChange={() => {
-                toggleContainer(container, command)
+                dispatch(toggleContainerRequest({ container, command }));
             }}
         />
     );
 };
-
-// const mapDispatchToProps = dispatch => bindActionCreators(
-//   {
-//     toggleContainer
-//   },
-//   dispatch
-// )
 
 export default ContainerSwitch;

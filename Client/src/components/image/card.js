@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Pane, Heading, Badge, Button, ApplicationIcon, TrashIcon } from "evergreen-ui";
 
-import { runImageRequest, toggleDeleteModal, setActiveIndex } from "../../store/reducers/image.slice";
+import { runImageRequest, toggleDeleteModal, setActiveIndex } from "../../store/reducers/image";
 
 import "../../components/container/style/card.css";
 
@@ -16,6 +16,9 @@ const ImageCard = (props) => {
     const { activeIndex } = useSelector(state => state.image);
 
     const active = activeIndex === index;
+
+    const buttonMarginRight = 5;
+    const buttonHeight = 22;
 
     return (
         <Pane
@@ -41,19 +44,19 @@ const ImageCard = (props) => {
             {active &&
                 <Pane display="flex" marginTop={12}>
                     <Button
-                        marginRight={5}
-                        height={22}
+                        marginRight={buttonMarginRight}
+                        height={buttonHeight}
                         iconBefore={ApplicationIcon}
                         isLoading={image.stateToggling}
                         onClick={() => {
-                            runImageRequest(image)
+                            dispatch(runImageRequest(image));
                         }}
                     >
                         Run
                     </Button>
                     <Button
-                        marginRight={5}
-                        height={22}
+                        marginRight={buttonMarginRight}
+                        height={buttonHeight}
                         iconBefore={TrashIcon}
                         onClick={() => {
                             dispatch(toggleDeleteModal(image));

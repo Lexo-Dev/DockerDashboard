@@ -55,11 +55,4 @@ const GroupDeleteButton = (props) => {
     );
 }
 
-// const mapDispatchToProps = dispatch => bindActionCreators(
-//   {
-//     deleteGroup,
-//   },
-//   dispatch
-// )
-
 export default GroupDeleteButton;

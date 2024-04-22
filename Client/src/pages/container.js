@@ -1,29 +1,39 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import SecondaryNavBar from "../components/secondary_nav_bar";
 import ContainerLists from "../components/container/list";
 import GroupsList from "../components/groups/group_list";
-import LogSideSheet from "../components/log_side_sheet";
-import Modal from "../components/delete_modal";
+import DeleteModal from "../components/delete_modal";
+import LogsSideView from "../components/logs_side_view";
 
-import store from "../store"
-
-import { containerStatsProcess } from "../store/actions/stats.action";
-import { toggleDeleteModal, resetLogSideSheet } from "../store/actions/container.action";
+import { groupTest } from "../store/reducers/group";
+import { containerStatsProcess } from "../store/reducers/stat";
 
 const ContainerPage = (props) => {
 
-    const { showGroupsPage, showModal, selectedContainer, isShowingSideSheet, logData } = props
+    const dispatch = useDispatch();
+
+    const { showModal, selectedContainer, showLogs, logs } = useSelector(state => state.container);
+
+    const { showGroupsPage } = useSelector(state => state.group);
 
     useEffect(() => {
-        store.dispatch(containerStatsProcess());
+        // dispatch(containerStatsProcess());
     });
 
     return (
         <>
             <SecondaryNavBar />
-            {/* <LogSideSheet resetLogSideSheet={resetLogSideSheet} isShowingSideSheet={isShowingSideSheet} logData={logData} /> */}
-            {showModal && <Modal container={selectedContainer} toggleModal={toggleDeleteModal} />}
+            <LogsSideView
+                isShown={showLogs}
+                title="Container logs"
+                logs={logs}
+            />
+            <DeleteModal
+                container={selectedContainer}
+                isShown={showModal}
+            />
             <div className="subnavaware-view">
                 {
                     showGroupsPage ? <GroupsList /> : <ContainerLists />

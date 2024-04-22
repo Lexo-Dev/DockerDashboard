@@ -1,20 +1,21 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Pane } from "evergreen-ui";
 
 import ContainerCard from "./card";
 
-import { getContainers, toggleDeleteModal, resetLogSideSheet } from "../../store/actions/container.action";
+import { getContainersRequest } from "../../store/reducers/container";
 
 const ContainersList = (props) => {
 
-    const { segment } = props;
+    const dispatch = useDispatch();
 
-    const containers = [];
+    const { segment, containers } = useSelector(state => state.container);
 
     useEffect(() => {
-        getContainers(segment);
-    });
+        dispatch(getContainersRequest(segment));
+    }, [dispatch]);
 
     return (
         <Pane
@@ -22,8 +23,8 @@ const ContainersList = (props) => {
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            marginTop={20}>
-
+            marginTop={20}
+        >
             {
                 containers.map((container, index) =>
                     <ContainerCard
@@ -36,19 +37,5 @@ const ContainersList = (props) => {
         </Pane>
     );
 }
-
-// const mapStateToProps = state => {
-//   return {
-//     segment: state.container.segment,
-//     containers: state.container.containers,
-//   }
-// }
-
-// const mapDispatchToProps = dispatch => bindActionCreators(
-//   {
-//     getContainers
-//   },
-//   dispatch
-// )
 
 export default ContainersList;

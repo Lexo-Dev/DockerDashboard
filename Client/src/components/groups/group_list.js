@@ -48,12 +48,4 @@ const GroupsList = (props) => {
     );
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     groups: state.groups.groups,
-//     groupListLoading: state.groups.groupListLoading,
-//     containerListLoading: state.container.containerListLoading,
-//   }
-// }
-
 export default GroupsList;

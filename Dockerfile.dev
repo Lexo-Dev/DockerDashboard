@@ -1,0 +1,19 @@
+FROM node:21-alpine
+
+RUN apk update
+RUN apk add build-base python3
+RUN apk add docker
+
+WORKDIR /src
+
+# Install client dependencies
+COPY Client/package.json Client/package.json
+RUN cd Client && npm install
+
+COPY Client Client
+
+WORKDIR /src/Client
+
+ENTRYPOINT ["npm", "start"]
+
+EXPOSE 3000

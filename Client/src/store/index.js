@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import stats from "./reducers/stats.slice";
-import groups from "./reducers/groups.slice";
-import container from "./reducers/container.slice";
-import image from "./reducers/image.slice";
-import cleanup from "./reducers/cleanup.slice";
+import stat from "./reducers/stat";
+import group from "./reducers/group";
+import container from "./reducers/container";
+import image from "./reducers/image";
+import cleanup from "./reducers/cleanup";
 
 const storeOptions = {
     reducer: {
-        stats,
-        groups,
+        stat,
+        group,
         container,
         image,
         cleanup,

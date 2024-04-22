@@ -1,33 +1,40 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Pane, Spinner, Group, Button, ChevronLeftIcon, TagIcon, AddIcon } from "evergreen-ui";
-
-import { getContainers } from "../store/actions/container.action"
-import { genericGroups } from "../store/actions/groups.action"
+import { Pane, Group, Button, ChevronLeftIcon, TagIcon, AddIcon } from "evergreen-ui";
 
 import NewGroupForm from "./groups/new_group_form";
 
+import { getContainersRequest } from "../store/reducers/container";
+
 const SecondaryNavBar = (props) => {
 
-    const { loading, segment, showNewGroupForm, showGroupsPage } = props;
+    const dispatch = useDispatch();
 
-    const containerFilters = () => {
-        const options = [
-            { label: loading === "all" ? <Spinner size={16} /> : "All", value: "all" },
-            { label: loading === "active" ? <Spinner size={16} /> : "Active", value: "active" },
-            { label: loading === "stopped" ? <Spinner size={16} /> : "Stopped", value: "stopped" }
-        ];
+    const { segment, loading } = useSelector(state => state.container);
+
+    const { showNewGroupForm, showGroupsPage } = useSelector(state => state.group);
+
+    const handleContainerFiler = () => {
+        const options = ["all", "active", "stopped"];
         return (
             <Group>
-                {options.map((opt) => (
-                    <Button
-                        width={200}
-                        height={26}
-                        onClick={() => { console.log(segment); getContainers(opt.value); }}
-                    >
-                        {opt.label}
-                    </Button>
-                ))}
+                {
+                    options.map((opt) => (
+                        <Button
+                            key={opt}
+                            width={200}
+                            height={26}
+                            appearance={segment === opt ? "primary" : "default"}
+                            isLoading={loading}
+                            onClick={() => {
+                                dispatch(getContainersRequest(opt));
+                            }}
+                        >
+                            {opt}
+                        </Button>
+                    ))
+                }
             </Group>
         );
     };
@@ -42,13 +49,12 @@ const SecondaryNavBar = (props) => {
                 height={26}
                 onClick={() => {
                     const groupForm = !showNewGroupForm
-                    genericGroups({
-                        showGroupsPage: false,
-                        showNewGroupForm: groupForm,
-                    })
-                    if (groupForm) {
-                        getContainers("all")
-                    }
+                    // genericGroups({
+                    //     showGroupsPage: false,
+                    //     showNewGroupForm: groupForm,
+                    // })
+                    if (groupForm)
+                        getContainersRequest("all");
                 }}
             >
                 Create New Group
@@ -66,10 +72,10 @@ const SecondaryNavBar = (props) => {
                 paddingRight={30}
                 height={26}
                 onClick={() => {
-                    genericGroups({
-                        showGroupsPage: !showGroupsPage,
-                        showNewGroupForm: false,
-                    })
+                    // genericGroups({
+                    //     showGroupsPage: !showGroupsPage,
+                    //     showNewGroupForm: false,
+                    // })
                 }}
             >
                 {isBack ? "Back" : "Groups"}
@@ -78,13 +84,12 @@ const SecondaryNavBar = (props) => {
     };
 
     const renderBody = () => {
-        if (showNewGroupForm) {
+        if (showNewGroupForm)
             return <NewGroupForm />
-        } else if (showGroupsPage) {
-            return newGroupButton()
-        } else {
-            return containerFilters()
-        }
+        else if (showGroupsPage)
+            return newGroupButton();
+        else
+            return handleContainerFiler();
     };
 
     return (
@@ -98,14 +103,5 @@ const SecondaryNavBar = (props) => {
         </Pane>
     );
 }
-
-// const mapStateToProps = state => {
-//   return {
-//     segment: state.container.segment,
-//     loading: state.container.loading,
-//     showGroupsPage: state.groups.showGroupsPage,
-//     showNewGroupForm: state.groups.showNewGroupForm,
-//   }
-// }
 
 export default SecondaryNavBar;
