@@ -6,7 +6,7 @@ import "./container/style/card.css";
 
 const Loader = (props) => {
 
-    const { spinner } = props;
+    const { text } = props;
 
     return (
         <Pane
@@ -16,9 +16,9 @@ const Loader = (props) => {
             alignItems="center"
             marginTop={20}>
             <Heading>
-                {spinner ? "Loading images. Please wait...." : "No image on this machine"}
+                {text}
             </Heading>
-            {spinner && <Spinner marginX="auto" marginY={120} />}
+            <Spinner marginX="auto" marginY={120} />
         </Pane>
     );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Pane } from "evergreen-ui";
+import { Heading, Pane } from "evergreen-ui";
 
 import ImageCard from "./card";
 import DeleteModal from "../delete_modal";
@@ -13,7 +13,7 @@ const ImageList = () => {
 
     const dispatch = useDispatch();
 
-    const { images, showModal, selectedImage, loading } = useSelector(state => state.image);
+    const { loading, images, showModal, selectedImage } = useSelector(state => state.image);
 
     useEffect(() => {
         dispatch(getImagesRequest());
@@ -21,12 +21,18 @@ const ImageList = () => {
 
     if (loading) {
         return (
-            <Loader spinner={true} />
+            <Loader
+                text={"Loading images, please wait...."}
+            />
         );
     }
     else if (images.length === 0) {
         return (
-            <Loader />
+            <Heading
+                size={600}
+            >
+                No images available
+            </Heading>
         );
     }
 

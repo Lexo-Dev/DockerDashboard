@@ -6,7 +6,7 @@ import { Pane, Button, Heading, Badge, ApplicationIcon, TrashIcon } from "evergr
 import ContainerSwitch from "./switch";
 import ContainerSelector from "./selector";
 import ContainerRestart from "./restart_button";
-import ContainerStat from "./stat";
+import ContainerStats from "./stats";
 import CreatedAt from "../created_at";
 
 import {
@@ -38,8 +38,6 @@ const ContainerCard = (props) => {
 
     /** Render the container actions buttons */
     const renderActions = () => {
-        if (showNewGroupForm || !active)
-            return;
         return (
             <Pane display="flex" marginTop={12} marginLeft={46}>
                 <ContainerRestart
@@ -74,12 +72,9 @@ const ContainerCard = (props) => {
         const marginTop = !!showStatsInNewLine ? 5 : 0;
         return (
             <Pane display="flex" marginLeft={marginLeft} marginTop={marginTop}>
-                {
-                    !showNewGroupForm && container.State.Running && <ContainerStat
-                        containerId={container.shortId}
-                        stats={container.stats}
-                    />
-                }
+                <ContainerStats
+                    containerId={container.shortId}
+                />
             </Pane>
         );
     };
@@ -104,7 +99,7 @@ const ContainerCard = (props) => {
                             <ContainerSelector container={container} /> :
                             <ContainerSwitch container={container} />
                     }
-                    <Heading size={400}>
+                    <Heading size={400} fontWeight="bold" color="#234361">
                         {container.Name}
                     </Heading>
                     <Badge
@@ -121,9 +116,13 @@ const ContainerCard = (props) => {
                     </Badge>
                     <CreatedAt time={container.Created} />
                 </Pane>
-                {renderStats(container)}
+                {
+                    !showNewGroupForm && container.State.Running && renderStats()
+                }
             </Pane>
-            {renderActions()}
+            {
+                !showNewGroupForm && active && renderActions()
+            }
         </Pane>
     );
 }

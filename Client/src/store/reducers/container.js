@@ -9,9 +9,8 @@ export const getContainersRequest = createAsyncThunk(
     async (filter, { dispatch }) => {
         // Initial page state
         dispatch(setContainersList({
-            segment: filter,
             loading: true,
-            pageError: false,
+            segment: filter,
             activeIndex: 0,
         }));
         try {
@@ -20,14 +19,12 @@ export const getContainersRequest = createAsyncThunk(
             dispatch(setContainersList({
                 loading: false,
                 containers: response.data,
-                pageError: false
             }));
         }
         catch (error) {
             console.log(error);
             dispatch(setContainersList({
                 loading: false,
-                pageError: true
             }));
         }
     }
@@ -103,9 +100,24 @@ export const getContainerLogsRequest = createAsyncThunk(
     }
 );
 
+export const getContainersStatsRequest = createAsyncThunk(
+    "container/stats",
+    async (_, { dispatch }) => {
+        try {
+            const response = await request("get", "container/stats");
+            console.log(response);
+            dispatch(setStatistics(response.data));
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+);
+
 const containerSlice = createSlice({
     name: "container",
     initialState: {
+        loading: true,
         segment: "active",
         containers: [],
         activeIndex: 0,
@@ -113,9 +125,7 @@ const containerSlice = createSlice({
         logs: {},
         showModal: false,
         selectedContainer: {},
-
-        loading: false,
-        pageError: false,
+        stats: [],
     },
     reducers: {
         // Set states concerning the containers list
@@ -156,6 +166,10 @@ const containerSlice = createSlice({
             state.showLogs = !state.showLogs;
             state.logs = state.showLogs ? action.payload : {};
         },
+        // Update all running containers statistics
+        setStatistics(state, action) {
+            state.stats = action.payload;
+        },
     },
 });
 
@@ -167,14 +181,8 @@ export const {
     toggleDeleteModal,
     deleteContainerFromList,
     toggleContainerLogs,
+    setStatistics,
 
-    // setLoading,
-    // setContainerListLoading,
-    // setPageError,
-    // setSegment,
-    // toggleSideSheet,
-    // toggleModal,
-    // setSelectedContainer
 } = containerSlice.actions;
 
 export default containerSlice.reducer;

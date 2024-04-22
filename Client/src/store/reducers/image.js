@@ -57,9 +57,8 @@ export const deleteImageRequest = createAsyncThunk(
 const imageSlice = createSlice({
     name: "image",
     initialState: {
-        images: [],
         loading: false,
-        pageError: false,
+        images: [],
         activeIndex: 0,
         showModal: false,
         selectedImage: {}

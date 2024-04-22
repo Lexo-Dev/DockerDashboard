@@ -7,20 +7,20 @@ import GroupsList from "../components/groups/group_list";
 import DeleteModal from "../components/delete_modal";
 import LogsSideView from "../components/logs_side_view";
 
-import { groupTest } from "../store/reducers/group";
-import { containerStatsProcess } from "../store/reducers/stat";
+import { getContainersStatsRequest } from "../store/reducers/container";
 
-const ContainerPage = (props) => {
+const ContainerPage = () => {
 
     const dispatch = useDispatch();
 
     const { showModal, selectedContainer, showLogs, logs } = useSelector(state => state.container);
 
-    const { showGroupsPage } = useSelector(state => state.group);
+    const showGroupsPage = false;
 
     useEffect(() => {
-        // dispatch(containerStatsProcess());
-    });
+        dispatch(getContainersStatsRequest());
+        // setInterval(() => dispatch(getContainersStatsRequest()), 2000);
+    }, [dispatch]);
 
     return (
         <>
