@@ -18,6 +18,13 @@ COPY Backend Backend
 COPY Client Client
 
 # Production build of the client
+ARG backend_ssl
+ENV REACT_APP_BACKEND_SSL=${backend_ssl}
+ARG backend_host
+ENV REACT_APP_BACKEND_HOST=${backend_host}
+ARG backend_port
+ENV REACT_APP_BACKEND_PORT=${backend_port}
+
 RUN cd Client && npm run build
 
 RUN mv Client/build Backend/web

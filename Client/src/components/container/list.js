@@ -27,11 +27,18 @@ const ContainersList = (props) => {
     }
     else if (containers.length === 0) {
         return (
-            <Heading
-                size={600}
-            >
-                No containers available
-            </Heading>
+            <Pane
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                marginTop={20}>
+                <Heading
+                    size={600}
+                >
+                    No containers available
+                </Heading>
+            </Pane>
         );
     }
 
