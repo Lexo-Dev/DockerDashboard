@@ -14,7 +14,6 @@ RUN cd Backend && npm install
 COPY Client/package.json Client/package.json
 RUN cd Client && npm install
 
-COPY Backend Backend
 COPY Client Client
 
 # Production build of the client
@@ -24,13 +23,15 @@ ARG backend_host
 ENV REACT_APP_BACKEND_HOST=${backend_host}
 ARG backend_port
 ENV REACT_APP_BACKEND_PORT=${backend_port}
-
 RUN cd Client && npm run build
+
+COPY Backend Backend
 
 RUN mv Client/build Backend/web
 
-COPY app.js app.js
+WORKDIR /src/Backend
 
-ENTRYPOINT ["node", "/src/app.js"]
+# Start the backend that will also serve the static client build using Express
+ENTRYPOINT ["npm", "start"]
 
 EXPOSE 3230
