@@ -15,7 +15,10 @@ const SecondaryNavBar = (props) => {
 
     const { showNewGroupForm, showGroupsPage } = useSelector(state => state.group);
 
-    const handleContainerFiler = () => {
+    const buttonHeight = 26;
+    const buttonWidth = 100;
+
+    const renderContainerFilters = () => {
         const options = ["all", "active", "stopped"];
         return (
             <Group>
@@ -23,8 +26,8 @@ const SecondaryNavBar = (props) => {
                     options.map((opt) => (
                         <Button
                             key={opt}
-                            width={200}
-                            height={26}
+                            height={buttonHeight}
+                            width={buttonWidth}
                             appearance={segment === opt ? "primary" : "default"}
                             isLoading={loading}
                             onClick={() => {
@@ -39,14 +42,15 @@ const SecondaryNavBar = (props) => {
         );
     };
 
-    const newGroupButton = () => {
+    const renderNewGroupButton = () => {
         return (
             <Button
+                height={buttonHeight}
+                width={buttonWidth}
                 marginRight={12}
                 iconBefore={AddIcon}
                 paddingLeft={35}
                 paddingRight={30}
-                height={26}
                 onClick={() => {
                     const groupForm = !showNewGroupForm
                     // genericGroups({
@@ -62,15 +66,16 @@ const SecondaryNavBar = (props) => {
         );
     };
 
-    const groupsToggler = () => {
+    const renderGroupButton = () => {
         const isBack = showGroupsPage || showNewGroupForm;
         return (
             <Button
+                height={buttonHeight}
+                width={buttonWidth}
                 marginRight={12}
                 iconBefore={isBack ? ChevronLeftIcon : TagIcon}
                 paddingLeft={35}
                 paddingRight={30}
-                height={26}
                 onClick={() => {
                     // genericGroups({
                     //     showGroupsPage: !showGroupsPage,
@@ -78,7 +83,9 @@ const SecondaryNavBar = (props) => {
                     // })
                 }}
             >
-                {isBack ? "Back" : "Groups"}
+                {
+                    isBack ? "Back" : "Groups"
+                }
             </Button>
         );
     };
@@ -87,19 +94,24 @@ const SecondaryNavBar = (props) => {
         if (showNewGroupForm)
             return <NewGroupForm />
         else if (showGroupsPage)
-            return newGroupButton();
+            return renderNewGroupButton();
         else
-            return handleContainerFiler();
+            return renderContainerFilters();
     };
 
     return (
         <Pane
-            backgroundColor="#f1f1f1"
             display="flex"
             justifyContent="center"
-            padding={10}>
-            {groupsToggler()}
-            {renderBody()}
+            padding={10}
+            backgroundColor="#f1f1f1"
+        >
+            {
+                renderGroupButton()
+            }
+            {
+                renderBody()
+            }
         </Pane>
     );
 }

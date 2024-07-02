@@ -15,8 +15,8 @@ const NavBar = () => {
         setActive(path);
     }, [location]);
 
-    const buttonWidth = 48;
-    const buttonHeight = 250;
+    const buttonHeight = 48;
+    const buttonWidth = 250;
 
     const handlePageChange = (destination) => {
         setActive(destination);
@@ -35,8 +35,8 @@ const NavBar = () => {
     return (
         <Pane display="flex" justifyContent="center" padding={26} background="#f9f9fc">
             <Button
-                height={buttonWidth}
-                width={buttonHeight}
+                height={buttonHeight}
+                width={buttonWidth}
                 justifyContent="center"
                 alignItems="center"
                 fontSize={14}
@@ -52,8 +52,8 @@ const NavBar = () => {
                 <Icon icon={LayersIcon} marginRight={5} size={14} /> Container
             </Button>
             <Button
-                height={buttonWidth}
-                width={buttonHeight}
+                height={buttonHeight}
+                width={buttonWidth}
                 justifyContent="center"
                 alignItems="center"
                 fontSize={14}
@@ -71,8 +71,8 @@ const NavBar = () => {
                 <Icon icon={ProjectsIcon} marginRight={5} size={14} /> Image
             </Button>
             <Button
-                height={buttonWidth}
-                width={buttonHeight}
+                height={buttonHeight}
+                width={buttonWidth}
                 justifyContent="center"
                 alignItems="center"
                 fontSize={14}
