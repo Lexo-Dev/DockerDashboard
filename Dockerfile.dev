@@ -15,5 +15,3 @@ COPY Client Client
 WORKDIR /src/Client
 
 ENTRYPOINT ["npm", "start"]
-
-EXPOSE 3000
