@@ -33,5 +33,3 @@ WORKDIR /src/Backend
 
 # Start the backend that will also serve the static client build using Express
 ENTRYPOINT ["npm", "start"]
-
-EXPOSE 3230
