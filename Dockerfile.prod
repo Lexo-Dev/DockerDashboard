@@ -17,12 +17,12 @@ RUN cd Client && npm install
 COPY Client Client
 
 # Production build of the client
-ARG backend_ssl
-ENV REACT_APP_BACKEND_SSL=${backend_ssl}
-ARG backend_host
-ENV REACT_APP_BACKEND_HOST=${backend_host}
-ARG backend_port
-ENV REACT_APP_BACKEND_PORT=${backend_port}
+ARG BACKEND_SSL
+ENV REACT_APP_BACKEND_SSL=${BACKEND_SSL}
+ARG BACKEND_HOST
+ENV REACT_APP_BACKEND_HOST=${BACKEND_HOST}
+ARG BACKEND_PORT
+ENV REACT_APP_BACKEND_PORT=${BACKEND_PORT}
 RUN cd Client && npm run build
 
 COPY Backend Backend
